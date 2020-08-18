@@ -1,0 +1,93 @@
+<% include ../layout/header.ejs %>
+<!-- END TOPBAR -->
+<!-- START CONTAINER -->
+<div class="page-container row-fluid container-fluid">
+    <!-- SIDEBAR - START -->
+
+    <% include ../layout/menu.ejs %>
+
+    <!--  SIDEBAR - END -->
+    <!-- START CONTENT -->
+    <section id="main-content" class=" ">
+        <section class="wrapper main-wrapper row" style=''>
+            <div class='col-xs-12'>
+                <div class="page-title">
+                    <div class="pull-left">
+                        <h1 class="title">Thêm Nhân Viên</h1>
+                    </div>
+                    <div class="pull-right hidden-xs">
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12">
+                <section class="box ">
+                    <div class="content-body">
+                        <div class="row">
+                            <% if(success_msg != ''){ %>
+                                <div class="alert alert-success"><%= success_msg %></div>
+                            <% } %>
+                            <% if(errors) { %>
+                                <div class="alert alert-danger">
+                                    <% errors.forEach(function(e){ %>
+
+                                        <%= e.msg %> <br/>
+                                    <% }); %>
+
+                                </div>
+                            <% }; %>
+                            <form role="form" action="" method="POST">
+                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                    <div class="form-group">
+                                        <label class="form-label" for="field-120334">Tên nhân viên</label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <input type="text" id="name" value="" class="form-control" name="name" autofocus>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                    <div class="form-group">
+                                        <label class="form-label" for="field-120334">Tên đăng nhập</label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <input type="text" id="username" class="form-control"
+                                                   name="username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                    <div class="form-group">
+                                        <label class="form-label" for="field-120334">Quyền</label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <select class="form-control" id="role" name="role">
+                                                <option value="user" selected="selected">
+                                                    User
+                                                </option>
+                                                <option value="admin">
+                                                    Admin
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                    <div class="text-left">
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                        <button type="button" class="btn">Huỷ</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+    <!-- END CONTENT -->
+    <div class="chatapi-windows ">
+    </div>
+    <% include ../layout/footer.ejs %>

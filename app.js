@@ -10,10 +10,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
+var customer = require('./routes/customer');
 var admin = require('./routes/admin');
-var cate = require('./routes/cate');
 var product = require('./routes/product');
 var cart = require('./routes/cart');
 
@@ -38,8 +37,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(session({ secret: 'chauminhthien', resave: true, saveUninitialized: true }))
-
 
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
@@ -59,7 +56,7 @@ app.use(expressValidator({
 }));
 
 app.use(session({
-  secret: 'chauminhthien',
+  secret: 'vinhtai',
   resave: true,
   key: 'user',
   saveUninitialized: true
@@ -81,10 +78,10 @@ app.use(function(req, res, next){
 
 
 
-app.use('/', index);
-app.use('/users', users);
+app.use('/', admin);
 app.use('/admin', admin);
-app.use('/admin/cate', cate);
+app.use('/admin/user', user);
+app.use('/admin/customer', customer);
 app.use('/admin/product', product);
 app.use('/admin/cart', cart);
 

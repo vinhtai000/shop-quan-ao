@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var Cate = require('../model/Cate.js');
-
 var User = require('../model/User.js');
 
 var bcrypt = require('bcryptjs');
@@ -25,77 +23,73 @@ function bodauTiengViet(str) {
 }
 
 /* GET home page. */
-router.get('/', checkAdmin, function(req, res, next) {
-  res.render('admin/main/index');
+router.get('/', checkAdmin, function (req, res, next) {
+    res.render('admin/main/index');
 });
 
-router.get('/dang-nhap.html', function(req, res, next) {
-  res.render('admin/login/index');
+router.get('/login.html', function (req, res, next) {
+    res.render('admin/login/index');
 });
 
 
-
-
-router.post('/dang-nhap.html',
-  passport.authenticate('local', { successRedirect: '/admin',
-                                   failureRedirect: '/admin/dang-nhap.html',
-                                   failureFlash: true })
+router.post('/login.html',
+    passport.authenticate('local', {
+        successRedirect: '/admin',
+        failureRedirect: '/admin/login.html',
+        failureFlash: true
+    })
 );
 
 passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-  },
+        usernameField: 'username',
+        passwordField: 'password'
+    },
 
-  function(username, password, done) {
-      User.findOne({email: username}, function(err, username){
-          if(err) throw err;
-          if(username){
-            bcrypt.compare(password, username.password, function(err, user) {
-                if(err) throw err;
-                if(user){
-                     return done(null, username);
-                }else{
-                   return done(null, false, { message: 'Tài Khoảng Không Đúng' });
-                }
-            });
-          }else{
-             return done(null, false, { message: 'Tài Khoảng Không Đúng' });
-          }
-      });
-  }
-
+    function (username, password, done) {
+        User.findOne({username: username}, function (err, username) {
+            if (err) throw err;
+            if (username) {
+                bcrypt.compare(password, username.password, function (err, user) {
+                    if (err) throw err;
+                    if (user) {
+                        return done(null, username);
+                    } else {
+                        return done(null, false, {message: 'Tài Khoản Không Đúng'});
+                    }
+                });
+            } else {
+                return done(null, false, {message: 'Tài Khoản Không Đúng'});
+            }
+        });
+    }
 ));
 
-passport.serializeUser(function(email, done) {
-  
-  done(null, email.id);
+passport.serializeUser(function (username, done) {
+    done(null, username.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, email) {
-    done(err, email);
-  });
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, username) {
+        done(err, username);
+    });
 });
 
 
-
-router.post('/getUser',checkAdmin, function (req, res) {
+router.post('/getUser', checkAdmin, function (req, res) {
     res.json(req.user);
 });
 
-router.get('/dang-xuat.html',checkAdmin, function (req, res) {
+router.get('/logout.html', checkAdmin, function (req, res) {
     req.logout();
-    res.redirect('/admin/dang-nhap.html');
+    res.redirect('/admin/login.html');
 });
 
 
-function checkAdmin(req, res, next){
-   
-    if(req.isAuthenticated()){
-      next();
-    }else{
-      res.redirect('/admin/dang-nhap.html');
+function checkAdmin(req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect('/admin/login.html');
     }
 }
 

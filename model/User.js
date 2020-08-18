@@ -3,11 +3,10 @@ var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 var User = new Schema({
- fullname 		: String,
- img 			: String,
- email 			: String,
- password 		: String,
-
-},{collection : 'user'});
+    name: String,
+    username: String,
+    password: String,
+    role: String,
+}, {collection: 'user'});
 
 module.exports = mongoose.model('User', User);

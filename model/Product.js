@@ -3,13 +3,14 @@ var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 var Product = new Schema({
-  name 			:  String,
-  nameKhongDau	: String,
+  productId     : String,
+  name 			: String,
+  search	    : String,
   img 			: String,
-  cateId 		: String,
+  cate 		    : String,
   des 			: String,
   price 		: Number,
-  st 			: Number
+  quantity 		: Number
 
 
 },{collection : 'product'});
