@@ -29,7 +29,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // mongoose.connect('mongodb://localhost:27017/shopping', { useMongoClient: true });
-mongoose.connect('mongodb+srv://vinhtai:gameover@cluster0.8s0ta.mongodb.net/shopping?retryWrites=true&w=majority', { useMongoClient: true });
+var uri = "mongodb://vinhtai:gameover@cluster0-shard-00-00.8s0ta.mongodb.net:27017,cluster0-shard-00-01.8s0ta.mongodb.net:27017,cluster0-shard-00-02.8s0ta.mongodb.net:27017/shopping?ssl=true&replicaSet=atlas-2nq7z2-shard-0&authSource=admin&retryWrites=true&w=majority";
+mongoose.connect(uri, { useMongoClient: true });
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
